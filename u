@@ -1,0 +1,45 @@
+
+    @Autowired
+    RestTemplate restTemplate;
+    
+    @Override
+    public void funcion() {
+        // URL a consultar
+        String url = "https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_concepts_SSL.htm";
+
+        // Hacer GET y obtener respuesta como String
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+        // Imprimir código de estado y cuerpo de la respuesta
+        System.out.println("Código de estado: " + response.getStatusCodeValue());
+        System.out.println("Cuerpo de la respuesta:\n" + response.getBody());
+    }
+
+    public void funcion1() {    
+        try {            
+            URL url = new URL("https://httpbin.org/");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(conn.getInputStream())
+            );
+
+            String inputLine;
+            StringBuilder content = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine).append("\n");
+            }
+
+            in.close();
+            conn.disconnect();
+
+            System.out.println("Código de estado: " + conn.getResponseCode());
+            System.out.println("Cuerpo de la respuesta:\n" + content);
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(ServicioServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ServicioServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
